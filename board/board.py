@@ -1,8 +1,15 @@
+"""
+Module to define Minesweeper Board controller
+"""
 from collections import defaultdict
 from random import randrange
 
 
 class Board:
+    """
+    Board class that configures the logical minesweeper board
+    and controls its logic.
+    """
 
     size: int
     number_of_mines: int
@@ -12,7 +19,7 @@ class Board:
     mine_positions: set[tuple[int, int]]
     __game_ended: bool
 
-    def __init__(self, size, number_of_mines):
+    def __init__(self, size: int, number_of_mines: int):
         self.size = size
         self.number_of_mines = number_of_mines
         self.cells = []
@@ -44,8 +51,8 @@ class Board:
                       (0, -1), (0, 1),
                       (1, -1), (1, 0), (1, 1)]
 
-        for row, x in enumerate(self.cells):
-            for col, y in enumerate(self.cells[row]):
+        for row, _ in enumerate(self.cells):
+            for col, _ in enumerate(self.cells[row]):
                 adjacent_mines: int = 0
 
                 for d in directions:
@@ -59,10 +66,9 @@ class Board:
 
     def __fill_adj_map(self):
         directions = [(-1, -1), (-1, 0), (-1, 1),
-                      (0, -1), (0, 1),
-                      (1, -1), (1, 0), (1, 1)]
-        for row, x in enumerate(self.hints):
-            for col, y in enumerate(self.hints[row]):
+                      (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
+        for row, _ in enumerate(self.hints):
+            for col, _ in enumerate(self.hints[row]):
                 if self.hints[row][col] == 0 and (row, col) not in self.mine_positions:
                     for d in directions:
                         delta_row, delta_col = d[0], d[1]
@@ -73,6 +79,9 @@ class Board:
                                 self.adj_map[(row, col)].add((new_row, new_col))
 
     def click(self, row: int, col: int) -> bool:
+        """
+        Simulates a 0-based click event on the board at [row, col].
+        """
         if row < 0 or col < 0 or row > self.size or col > self.size:
             return True
         if self.game_ended:
@@ -83,31 +92,35 @@ class Board:
         if (row, col) in self.mine_positions:
             self.__end_game(True)
             return False
-        else:
-            if self.hints[row][col] == 0:
-                origin = (row, col)
-                stack = [origin]
-                seen = set()
 
-                while stack:
-                    node = stack.pop()
-                    if node in seen:
-                        continue
-                    seen.add(node)
-                    self.cells[node[0]][node[1]] = '0'
-                    for neighbor in self.adj_map[node]:
-                        stack.append(neighbor)
-                if self.has_won():
-                    self.__end_game(False)
+        if self.hints[row][col] == 0:
+            origin = (row, col)
+            stack = [origin]
+            seen = set()
 
-                return True
-            else:
-                self.cells[row][col] = f'{self.hints[row][col]}'
-                if self.has_won():
-                    self.__end_game(False)
-                return True
+            while stack:
+                node = stack.pop()
+                if node in seen:
+                    continue
+                seen.add(node)
+                self.cells[node[0]][node[1]] = '0'
+                for neighbor in self.adj_map[node]:
+                    stack.append(neighbor)
+            if self.has_won():
+                self.__end_game(False)
+
+            return True
+
+        self.cells[row][col] = f'{self.hints[row][col]}'
+        if self.has_won():
+            self.__end_game(False)
+        return True
 
     def has_won(self) -> bool:
+        """
+        Returns a boolean value indicated if the player has won.
+        True if player has won, False if player has lost.
+        """
         empty_cells = 0
         for x in self.cells:
             for y in x:
@@ -121,19 +134,25 @@ class Board:
         self.__reveal_mines()
         self.__game_ended = True
         if lost:
-            print(f'You\'ve lost the game')
+            print('You\'ve lost the game')
         else:
-            print(f'You\'ve won the game')
+            print('You\'ve won the game')
 
     def __reveal_mines(self):
         for (row, col) in self.mine_positions:
             self.cells[row][col] = 'X'
 
     @property
-    def game_ended(self):
+    def game_ended(self) -> bool:
+        """
+        Returns a boolean value indicating whether the game has ended or not.
+        """
         return self.__game_ended
 
     def print_visual_board(self):
+        """
+        Prints a visual representation of the board.
+        """
         for x in self.cells:
             print(f'{x}\n')
 
