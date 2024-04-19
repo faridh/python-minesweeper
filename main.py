@@ -49,10 +49,10 @@ if __name__ == '__main__':
 
     CLICK_NUMBER = 1
     while not board.game_ended:
-        row_selection = input(f'Select a row between [0-{board_size-1}]\n')
-        col_selection = input(f'Select a col between [0-{board_size-1}]\n')
-        if (not Validator.is_in_range(row_selection, board_size)
-                or not Validator.is_in_range(col_selection, board_size)):
+        row_selection = input(f'Select a row between [0-{board_size_int-1}]\n')
+        col_selection = input(f'Select a col between [0-{board_size_int-1}]\n')
+        if (not Validator.is_in_range(row_selection, board_size_int)
+                or not Validator.is_in_range(col_selection, board_size_int)):
             print('Row or Col are invalid')
             continue
 

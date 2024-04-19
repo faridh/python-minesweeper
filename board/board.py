@@ -47,52 +47,55 @@ class Board:
                 placed_mines += 1
 
     def __fill_hints(self):
-        directions = [(-1, -1), (-1, 0), (-1, 1),
-                      (0, -1), (0, 1),
+        directions = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1),
                       (1, -1), (1, 0), (1, 1)]
 
-        for row, _ in enumerate(self.cells):
-            for col, _ in enumerate(self.cells[row]):
+        for row in len(self.cells):
+            for col in len(self.cells[row]):
                 adjacent_mines: int = 0
 
                 for d in directions:
                     delta_row, delta_col = d[0], d[1]
                     new_row = row + delta_row
                     new_col = col + delta_col
-                    if 0 <= new_row < self.size and 0 <= new_col < self.size:
-                        if (new_row, new_col) in self.mine_positions:
-                            adjacent_mines += 1
+                    if (0 <= new_row < self.size and 0 <= new_col < self.size and
+                            (new_row, new_col) in self.mine_positions):
+                        adjacent_mines += 1
                 self.hints[row][col] = adjacent_mines
 
     def __fill_adj_map(self):
-        directions = [(-1, -1), (-1, 0), (-1, 1),
-                      (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
-        for row, _ in enumerate(self.hints):
-            for col, _ in enumerate(self.hints[row]):
+        directions = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1),
+                      (1, -1), (1, 0), (1, 1)]
+        for row in len(self.hints):
+            for col in len(self.hints[row]):
                 if self.hints[row][col] == 0 and (row, col) not in self.mine_positions:
                     for d in directions:
                         delta_row, delta_col = d[0], d[1]
                         new_row = row + delta_row
                         new_col = col + delta_col
-                        if 0 <= new_row < self.size and 0 <= new_col < self.size:
-                            if self.hints[new_row][new_col] == 0:
-                                self.adj_map[(row, col)].add((new_row, new_col))
+                        if (0 <= new_row < self.size and 0 <= new_col < self.size and
+                                self.hints[new_row][new_col] == 0):
+                            self.adj_map[(row, col)].add((new_row, new_col))
 
     def click(self, row: int, col: int) -> bool:
         """
         Simulates a 0-based click event on the board at [row, col].
         """
-        if row < 0 or col < 0 or row > self.size or col > self.size:
-            return True
+
+        # Block clicks if the game ended
         if self.game_ended:
             return False
+
+        # Do nothing if there's a repeated click
         if self.cells[row][col] != ' ':
             return True
 
+        # User selected a mine
         if (row, col) in self.mine_positions:
             self.__end_game(True)
             return False
 
+        # User selected a cell = 0
         if self.hints[row][col] == 0:
             origin = (row, col)
             stack = [origin]
@@ -111,6 +114,7 @@ class Board:
 
             return True
 
+        # User selected a cell != 0 and not a mine
         self.cells[row][col] = f'{self.hints[row][col]}'
         if self.has_won():
             self.__end_game(False)
@@ -119,7 +123,7 @@ class Board:
     def has_won(self) -> bool:
         """
         Returns a boolean value indicated if the player has won.
-        True if player has won, False if player has lost.
+        True if player has won the game.
         """
         empty_cells = 0
         for x in self.cells:
