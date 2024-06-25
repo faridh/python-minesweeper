@@ -50,8 +50,8 @@ class Board:
         directions = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1),
                       (1, -1), (1, 0), (1, 1)]
 
-        for row in len(self.cells):
-            for col in len(self.cells[row]):
+        for row in range(len(self.cells)):
+            for col in range(len(self.cells[row])):
                 adjacent_mines: int = 0
 
                 for d in directions:
@@ -66,8 +66,8 @@ class Board:
     def __fill_adj_map(self):
         directions = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1),
                       (1, -1), (1, 0), (1, 1)]
-        for row in len(self.hints):
-            for col in len(self.hints[row]):
+        for row in range(len(self.hints)):
+            for col in range(len(self.hints[row])):
                 if self.hints[row][col] == 0 and (row, col) not in self.mine_positions:
                     for d in directions:
                         delta_row, delta_col = d[0], d[1]

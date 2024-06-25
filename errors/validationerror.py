@@ -3,7 +3,7 @@ Sample documentation for module.
 """
 
 
-class ValidationError:
+class ValidationError(RuntimeError):
     """
     Represents a superclass to derive different types of
     validation errors when creating a Minesweeper board.
