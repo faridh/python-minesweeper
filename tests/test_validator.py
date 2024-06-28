@@ -12,6 +12,9 @@ class TestValidator(unittest.TestCase):
     Defines unit tests for Validator class
     """
     def test_validates_board_size_successfully(self) -> None:
+        """
+        Tests that Validator validates the board size successfully
+        """
         result: list[ValidationError] = Validator.get_configuration_errors('3', '1')
         self.assertEqual(len(result), 1)
         self.assertEqual(type(result[0]), BoardSizeError)
@@ -25,6 +28,9 @@ class TestValidator(unittest.TestCase):
         self.assertEqual(type(result[0]), BoardSizeError)
 
     def test_validates_number_of_mines_successfully(self) -> None:
+        """
+        Tests that Validator validates the number of mines successfully
+        """
         result: list[ValidationError] = Validator.get_configuration_errors('5', '1')
         self.assertEqual(len(result), 1)
         self.assertEqual(type(result[0]), NumberOfMinesError)
@@ -38,14 +44,13 @@ class TestValidator(unittest.TestCase):
         self.assertEqual(type(result[0]), NumberOfMinesError)
 
     def test_validates_configuration_successfully(self) -> None:
-        result: list[ValidationError] = Validator.get_configuration_errors('4', '2')
-        self.assertEqual(len(result), 0)
-
-        result: list[ValidationError] = Validator.get_configuration_errors('4', '4')
-        self.assertEqual(len(result), 0)
-
-        result: list[ValidationError] = Validator.get_configuration_errors('10', '5')
-        self.assertEqual(len(result), 0)
-
-        result: list[ValidationError] = Validator.get_configuration_errors('10', '25')
-        self.assertEqual(len(result), 0)
+        """
+        Tests that Validator validates a valid configuration successfully
+        """
+        for board_size in range(4, 21):
+            min_mines = board_size // 2
+            max_mines = board_size ** 2 // 4
+            for num_mines in range(min_mines, max_mines + 1):
+                result: list[ValidationError] = (
+                    Validator.get_configuration_errors(str(board_size), str(num_mines)))
+                self.assertEqual(len(result), 0)
