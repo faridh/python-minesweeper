@@ -1,7 +1,6 @@
 """
 Validator module
 """
-
 from errors import BoardSizeError, NumberOfMinesError, ValidationError
 
 

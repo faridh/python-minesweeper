@@ -1,6 +1,6 @@
 """
 Module Errors
 """
-from .validationerror import *
-from .boardsizeerror import *
-from .numberofmineserror import *
+from .validationerror import ValidationError
+from .boardsizeerror import BoardSizeError
+from .numberofmineserror import NumberOfMinesError
