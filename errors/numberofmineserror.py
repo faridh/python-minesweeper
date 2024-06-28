@@ -1,7 +1,7 @@
 """
 Sample documentation for module.
 """
-from errors.validationerror import ValidationError
+from errors import ValidationError
 
 
 class NumberOfMinesError(ValidationError):

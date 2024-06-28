@@ -2,9 +2,7 @@
 Validator module
 """
 
-from errors.validationerror import ValidationError
-from errors.boardsizeerror import BoardSizeError
-from errors.numberofmineserror import NumberOfMinesError
+from errors import BoardSizeError, NumberOfMinesError, ValidationError
 
 
 class Validator:
