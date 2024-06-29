@@ -11,7 +11,8 @@ class TestValidator(unittest.TestCase):
     """
     Defines unit tests for Validator class
     """
-    def test_validates_board_size_successfully(self) -> None:
+
+    def test_should_validate_board_size_successfully(self) -> None:
         """
         Tests that Validator validates the board size successfully
         """
@@ -27,7 +28,7 @@ class TestValidator(unittest.TestCase):
         self.assertEqual(len(result), 1)
         self.assertEqual(type(result[0]), BoardSizeError)
 
-    def test_validates_number_of_mines_successfully(self) -> None:
+    def test_should_validate_number_of_mines_successfully(self) -> None:
         """
         Tests that Validator validates the number of mines successfully
         """
@@ -43,7 +44,7 @@ class TestValidator(unittest.TestCase):
         self.assertEqual(len(result), 1)
         self.assertEqual(type(result[0]), NumberOfMinesError)
 
-    def test_validates_configuration_successfully(self) -> None:
+    def test_should_validate_configuration_successfully(self) -> None:
         """
         Tests that Validator validates a valid configuration successfully
         """
