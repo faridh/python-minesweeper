@@ -45,7 +45,7 @@ class TestBoard(unittest.TestCase):
         subject: Board = Board(board_size, 2)
         self.assertFalse(subject.game_ended)
         self.assertFalse(subject.won)
-        rows, cols = [x for x in range(board_size)], [x for x in range(board_size)]
+        rows, cols = list(range(board_size)), list(range(board_size))
         clicks: list[list[int, int]] = itertools.product(rows, cols)
         mines: set[tuple[int, int]] = subject.mine_positions
         for row, col in clicks:
