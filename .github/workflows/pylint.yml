@@ -27,4 +27,4 @@ jobs:
         python -m unittest
     - name: Reporting code coverage with coverage
       run: |
-        coverage report -m
+        python -m coverage report  -m
