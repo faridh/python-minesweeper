@@ -96,7 +96,7 @@ class Board:
         self.__cells = [[' ' for _ in range(self.size)] for _ in range(self.size)]
         self.__hints = [[0 for _ in range(self.size)] for _ in range(self.size)]
 
-    def __place_mines(self):
+    def __place_mines(self) -> None:
         placed_mines: int = 0
         while placed_mines < self.number_of_mines:
             random_row = randrange(0, self.size)
@@ -105,7 +105,7 @@ class Board:
                 self.__mine_positions.add((random_row, random_col))
                 placed_mines += 1
 
-    def __fill_hints(self):
+    def __fill_hints(self) -> None:
         directions = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1),
                       (1, -1), (1, 0), (1, 1)]
 

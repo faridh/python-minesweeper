@@ -26,15 +26,15 @@ X X X X
 Assume the player can input the N for the size of the board, and also the
 number of mines? Up to you.
 """
-from typing import Optional
+from typing import Any
 
 from board import Board
 from validator import Validator
 
 if __name__ == '__main__':
     VALID_INPUT: bool = False
-    board_size: Optional[str] = None
-    number_of_mines: Optional[str] = None
+    board_size: Any = None
+    number_of_mines: Any = None
     while not VALID_INPUT:
         board_size = input('Size of board?\n')
         number_of_mines = input('Number of mines?\n')
