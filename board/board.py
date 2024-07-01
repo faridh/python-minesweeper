@@ -198,10 +198,8 @@ class Board:
         self.__game_ended = True
         if lost:
             self.__has_lost, self.__has_won = True, False
-            print('You\'ve lost the game')
         else:
             self.__has_lost, self.__has_won = False, True
-            print('You\'ve won the game')
 
     def __reveal_mines(self):
         for (row, col) in self.mine_positions:

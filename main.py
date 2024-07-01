@@ -30,6 +30,7 @@ from typing import Any
 
 from board import Board
 from validator import Validator
+from constants import Constants
 
 
 def run() -> None:
@@ -70,12 +71,17 @@ def run() -> None:
         board.print_visual_board()
         click_number += 1
 
-    print('\n\nEnd of the Game')
+    print(f'\n\n{Constants.blue()}End of the Game{Constants.color_off()}')
     print(board)
+    if board.lost:
+        print(f'{Constants.red()}You lost !{Constants.color_off()}')
+    if board.won:
+        print(f'{Constants.green()}You won !{Constants.color_off()}')
 
 
 if __name__ == '__main__':
     try:
         run()
     except KeyboardInterrupt:
-        print('\x1b[2K\x1b[31mUser interrupted execution.')
+        print(f'{Constants.reset()}{Constants.red()}'
+              f'User interrupted execution.{Constants.color_off()}')
