@@ -1,6 +1,9 @@
 [run]
-omit = main.py
+omit =
+  main.py
+  *constants.py
 
 [report]
 show_missing = True
 fail_under = 80.0
+precision = 2
