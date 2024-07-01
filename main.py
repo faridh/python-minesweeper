@@ -31,17 +31,21 @@ from typing import Any
 from board import Board
 from validator import Validator
 
-if __name__ == '__main__':
-    VALID_INPUT: bool = False
+
+def run() -> None:
+    """
+    Main logic for game controller.
+    """
+    is_valid_input: bool = False
     board_size: Any = None
     number_of_mines: Any = None
-    while not VALID_INPUT:
+    while not is_valid_input:
         board_size = input('Size of board?\n')
         number_of_mines = input('Number of mines?\n')
 
         conf_errors = Validator.get_configuration_errors(board_size, number_of_mines)
         if not conf_errors:
-            VALID_INPUT = True
+            is_valid_input = True
         else:
             print(conf_errors)
 
@@ -50,10 +54,10 @@ if __name__ == '__main__':
     board = Board(board_size_int, number_of_mines_int)
     print(board)
 
-    CLICK_NUMBER = 1
+    click_number = 1
     while not board.game_ended:
-        row_selection = input(f'Select a row between [0-{board_size_int-1}]\n')
-        col_selection = input(f'Select a col between [0-{board_size_int-1}]\n')
+        row_selection = input(f'Select a row between [0-{board_size_int - 1}]\n')
+        col_selection = input(f'Select a col between [0-{board_size_int - 1}]\n')
         if (not Validator.is_in_range(row_selection, board_size_int)
                 or not Validator.is_in_range(col_selection, board_size_int)):
             print('Row or Col are invalid')
@@ -61,10 +65,17 @@ if __name__ == '__main__':
 
         row_selection_int = int(row_selection)
         col_selection_int = int(col_selection)
-        print(f'Click {CLICK_NUMBER}: ({row_selection_int}, {col_selection_int})')
+        print(f'Click {click_number}: ({row_selection_int}, {col_selection_int})')
         board.click(row_selection_int, col_selection_int)
         board.print_visual_board()
-        CLICK_NUMBER += 1
+        click_number += 1
 
     print('\n\nEnd of the Game')
     print(board)
+
+
+if __name__ == '__main__':
+    try:
+        run()
+    except KeyboardInterrupt:
+        print('\x1b[2K\x1b[31mUser interrupted execution.')
