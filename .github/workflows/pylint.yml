@@ -17,13 +17,13 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pylint pytest pytest-cov
+        pip install pylint pytest pytest-cov mypy
     - name: Analysing the code with pylint
       run: |
         pylint $(git ls-files '*.py')
     - name: Analysing the code with mypy
       run: |
-        mypy --show-error-context main.py
+        python -m mypy --show-error-context main.py
     - name: Running unit tests with pytest, generating coverage report
       run: |
         python -m pytest --cov-config=.coveragerc --cov='.' tests
