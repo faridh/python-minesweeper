@@ -12,15 +12,15 @@ class Board:
     """
 
     def __init__(self, size: int, number_of_mines: int):
-        self.__size = size
-        self.__number_of_mines = number_of_mines
-        self.__cells = []
-        self.__hints = []
-        self.__adj_map = defaultdict(set)
-        self.__mine_positions = set()
-        self.__game_ended = False
-        self.__has_lost = False
-        self.__has_won = False
+        self.__size: int = size
+        self.__number_of_mines: int = number_of_mines
+        self.__cells: list[list[str]] = []
+        self.__hints: list[list[int]] = []
+        self.__adj_map: dict[tuple[int, int], set[tuple[int, int]]] = defaultdict(set)
+        self.__mine_positions: set[tuple[int, int]] = set()
+        self.__game_ended: bool = False
+        self.__has_lost: bool = False
+        self.__has_won: bool = False
 
         self.__init_empty_board()
         self.__place_mines()
