@@ -33,7 +33,7 @@ from validator import Validator
 from constants import Constants
 
 
-def run() -> None:
+def main() -> None:
     """
     Main logic for game controller.
     """
@@ -81,7 +81,7 @@ def run() -> None:
 
 if __name__ == '__main__':
     try:
-        run()
+        main()
     except KeyboardInterrupt:
         print(f'{Constants.reset()}{Constants.red()}'
               f'User interrupted execution.{Constants.color_off()}')

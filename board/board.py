@@ -11,16 +11,6 @@ class Board:
     and controls its logic.
     """
 
-    __size: int
-    __number_of_mines: int
-    __cells: list[list[str]]
-    __hints: list[list[int]]
-    __adj_map: dict[tuple[int, int], set[tuple[int, int]]]
-    __mine_positions: set[tuple[int, int]]
-    __game_ended: bool
-    __has_lost: bool
-    __has_won: bool
-
     def __init__(self, size: int, number_of_mines: int):
         self.__size = size
         self.__number_of_mines = number_of_mines

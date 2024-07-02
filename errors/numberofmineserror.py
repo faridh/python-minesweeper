@@ -10,8 +10,6 @@ class NumberOfMinesError(ValidationError):
     boundaries.
     """
 
-    message: str
-
     def __init__(self, min_mines, max_mines):
         self.message = (f'Number of mines should be an integer '
                         f'between {min_mines} and {max_mines} inclusive.')

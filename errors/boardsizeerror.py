@@ -10,8 +10,6 @@ class BoardSizeError(ValidationError):
     or too large.
     """
 
-    message: str
-
     def __init__(self, min_size: int, max_size: int):
         self.message = (f'Board size should be an integer between {min_size} and '
                         f'{max_size} inclusive.')
