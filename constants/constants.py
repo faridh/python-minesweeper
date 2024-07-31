@@ -7,11 +7,12 @@ class Constants:
     """
     Helper class to access various constants.
     """
-    __reset: str = '\x1b[2K'
-    __color_off: str = '\x1b[0m'
-    __red: str = '\x1b[31m'
-    __green: str = '\x1b[32m'
-    __blue: str = '\x1b[34m'
+
+    __reset: str = "\x1b[2K"
+    __color_off: str = "\x1b[0m"
+    __red: str = "\x1b[31m"
+    __green: str = "\x1b[32m"
+    __blue: str = "\x1b[34m"
 
     def __init__(self):
         """

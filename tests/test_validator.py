@@ -1,6 +1,7 @@
 """
 UTs fot Validator
 """
+
 import unittest
 
 from errors import BoardSizeError, NumberOfMinesError, ValidationError
@@ -16,15 +17,15 @@ class TestValidator(unittest.TestCase):
         """
         Tests that Validator validates the board size successfully
         """
-        result: list[ValidationError] = Validator.get_configuration_errors('3', '1')
+        result: list[ValidationError] = Validator.get_configuration_errors("3", "1")
         self.assertEqual(len(result), 1)
         self.assertEqual(type(result[0]), BoardSizeError)
 
-        result: list[ValidationError] = Validator.get_configuration_errors('21', '1')
+        result: list[ValidationError] = Validator.get_configuration_errors("21", "1")
         self.assertEqual(len(result), 1)
         self.assertEqual(type(result[0]), BoardSizeError)
 
-        result: list[ValidationError] = Validator.get_configuration_errors('a', '1')
+        result: list[ValidationError] = Validator.get_configuration_errors("a", "1")
         self.assertEqual(len(result), 1)
         self.assertEqual(type(result[0]), BoardSizeError)
 
@@ -32,15 +33,15 @@ class TestValidator(unittest.TestCase):
         """
         Tests that Validator validates the number of mines successfully
         """
-        result: list[ValidationError] = Validator.get_configuration_errors('5', '1')
+        result: list[ValidationError] = Validator.get_configuration_errors("5", "1")
         self.assertEqual(len(result), 1)
         self.assertEqual(type(result[0]), NumberOfMinesError)
 
-        result: list[ValidationError] = Validator.get_configuration_errors('5', '7')
+        result: list[ValidationError] = Validator.get_configuration_errors("5", "7")
         self.assertEqual(len(result), 1)
         self.assertEqual(type(result[0]), NumberOfMinesError)
 
-        result: list[ValidationError] = Validator.get_configuration_errors('5', 'a')
+        result: list[ValidationError] = Validator.get_configuration_errors("5", "a")
         self.assertEqual(len(result), 1)
         self.assertEqual(type(result[0]), NumberOfMinesError)
 
@@ -50,8 +51,9 @@ class TestValidator(unittest.TestCase):
         """
         for board_size in range(4, 21):
             min_mines = board_size // 2
-            max_mines = board_size ** 2 // 4
+            max_mines = board_size**2 // 4
             for num_mines in range(min_mines, max_mines + 1):
-                result: list[ValidationError] = (
-                    Validator.get_configuration_errors(str(board_size), str(num_mines)))
+                result: list[ValidationError] = Validator.get_configuration_errors(
+                    str(board_size), str(num_mines)
+                )
                 self.assertEqual(len(result), 0)

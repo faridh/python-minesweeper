@@ -26,6 +26,7 @@ X X X X
 Assume the player can input the N for the size of the board, and also the
 number of mines? Up to you.
 """
+
 from typing import Any
 
 from board import Board
@@ -41,8 +42,8 @@ def main() -> None:
     board_size: Any = None
     number_of_mines: Any = None
     while not is_valid_input:
-        board_size = input('Size of board?\n')
-        number_of_mines = input('Number of mines?\n')
+        board_size = input("Size of board?\n")
+        number_of_mines = input("Number of mines?\n")
 
         conf_errors = Validator.get_configuration_errors(board_size, number_of_mines)
         if not conf_errors:
@@ -57,31 +58,34 @@ def main() -> None:
 
     click_number = 1
     while not board.game_ended:
-        row_selection = input(f'Select a row between [0-{board_size_int - 1}]\n')
-        col_selection = input(f'Select a col between [0-{board_size_int - 1}]\n')
-        if (not Validator.is_in_range(row_selection, board_size_int)
-                or not Validator.is_in_range(col_selection, board_size_int)):
-            print('Row or Col are invalid')
+        row_selection = input(f"Select a row between [0-{board_size_int - 1}]\n")
+        col_selection = input(f"Select a col between [0-{board_size_int - 1}]\n")
+        if not Validator.is_in_range(
+            row_selection, board_size_int
+        ) or not Validator.is_in_range(col_selection, board_size_int):
+            print("Row or Col are invalid")
             continue
 
         row_selection_int = int(row_selection)
         col_selection_int = int(col_selection)
-        print(f'Click {click_number}: ({row_selection_int}, {col_selection_int})')
+        print(f"Click {click_number}: ({row_selection_int}, {col_selection_int})")
         board.click(row_selection_int, col_selection_int)
         board.print_visual_board()
         click_number += 1
 
-    print(f'\n\n{Constants.blue()}End of the Game{Constants.color_off()}')
+    print(f"\n\n{Constants.blue()}End of the Game{Constants.color_off()}")
     print(board)
     if board.lost:
-        print(f'{Constants.red()}You lost !{Constants.color_off()}')
+        print(f"{Constants.red()}You lost !{Constants.color_off()}")
     if board.won:
-        print(f'{Constants.green()}You won !{Constants.color_off()}')
+        print(f"{Constants.green()}You won !{Constants.color_off()}")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        print(f'{Constants.reset()}{Constants.red()}'
-              f'User interrupted execution.{Constants.color_off()}')
+        print(
+            f"{Constants.reset()}{Constants.red()}"
+            f"User interrupted execution.{Constants.color_off()}"
+        )

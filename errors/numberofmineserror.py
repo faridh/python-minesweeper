@@ -1,6 +1,7 @@
 """
 Sample documentation for module.
 """
+
 from errors import ValidationError
 
 
@@ -11,8 +12,10 @@ class NumberOfMinesError(ValidationError):
     """
 
     def __init__(self, min_mines, max_mines):
-        self.message = (f'Number of mines should be an integer '
-                        f'between {min_mines} and {max_mines} inclusive.')
+        self.message = (
+            f"Number of mines should be an integer "
+            f"between {min_mines} and {max_mines} inclusive."
+        )
 
     def __repr__(self):
         return self.message

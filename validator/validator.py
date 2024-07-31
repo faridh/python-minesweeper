@@ -1,6 +1,7 @@
 """
 Validator module
 """
+
 from errors import BoardSizeError, NumberOfMinesError, ValidationError
 
 
@@ -13,14 +14,18 @@ class Validator:
     max_board_size = 20
 
     @staticmethod
-    def get_configuration_errors(board_size: str, number_of_mines: str) -> list[ValidationError]:
+    def get_configuration_errors(
+        board_size: str, number_of_mines: str
+    ) -> list[ValidationError]:
         """
         Returns a list of ValidationError if existent.
         Returns an empty list if there are no ValidationErrors.
         """
         errors: list[ValidationError] = []
         if not Validator.__valid_board_size(board_size):
-            errors.append(BoardSizeError(Validator.min_board_size, Validator.max_board_size))
+            errors.append(
+                BoardSizeError(Validator.min_board_size, Validator.max_board_size)
+            )
             return errors
 
         b_size = int(board_size)
@@ -80,4 +85,4 @@ class Validator:
 
     @staticmethod
     def __max_valid_mines(board_size: int) -> int:
-        return board_size ** 2 // 4 # ~25 % total cells
+        return board_size**2 // 4  # ~25 % total cells

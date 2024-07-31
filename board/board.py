@@ -1,6 +1,7 @@
 """
 Module to define Minesweeper Board controller
 """
+
 from collections import defaultdict
 from random import randrange
 
@@ -83,7 +84,7 @@ class Board:
         return bool(self.__has_won)
 
     def __init_empty_board(self):
-        self.__cells = [[' ' for _ in range(self.size)] for _ in range(self.size)]
+        self.__cells = [[" " for _ in range(self.size)] for _ in range(self.size)]
         self.__hints = [[0 for _ in range(self.size)] for _ in range(self.size)]
 
     def __place_mines(self) -> None:
@@ -96,8 +97,16 @@ class Board:
                 placed_mines += 1
 
     def __fill_hints(self) -> None:
-        directions = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1),
-                      (1, -1), (1, 0), (1, 1)]
+        directions = [
+            (-1, -1),
+            (-1, 0),
+            (-1, 1),
+            (0, -1),
+            (0, 1),
+            (1, -1),
+            (1, 0),
+            (1, 1),
+        ]
 
         for row, _ in enumerate(self.__cells):
             for col, _ in enumerate(self.__cells[row]):
@@ -107,23 +116,40 @@ class Board:
                     delta_row, delta_col = d[0], d[1]
                     new_row = row + delta_row
                     new_col = col + delta_col
-                    if (0 <= new_row < self.size and 0 <= new_col < self.size and
-                            (new_row, new_col) in self.__mine_positions):
+                    if (
+                        0 <= new_row < self.size
+                        and 0 <= new_col < self.size
+                        and (new_row, new_col) in self.__mine_positions
+                    ):
                         adjacent_mines += 1
                 self.__hints[row][col] = adjacent_mines
 
     def __fill_adj_map(self):
-        directions = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1),
-                      (1, -1), (1, 0), (1, 1)]
+        directions = [
+            (-1, -1),
+            (-1, 0),
+            (-1, 1),
+            (0, -1),
+            (0, 1),
+            (1, -1),
+            (1, 0),
+            (1, 1),
+        ]
         for row, _ in enumerate(self.__hints):
             for col, _ in enumerate(self.__hints[row]):
-                if self.__hints[row][col] == 0 and (row, col) not in self.mine_positions:
+                if (
+                    self.__hints[row][col] == 0
+                    and (row, col) not in self.mine_positions
+                ):
                     for d in directions:
                         delta_row, delta_col = d[0], d[1]
                         new_row = row + delta_row
                         new_col = col + delta_col
-                        if (0 <= new_row < self.size and 0 <= new_col < self.size and
-                                self.__hints[new_row][new_col] == 0):
+                        if (
+                            0 <= new_row < self.size
+                            and 0 <= new_col < self.size
+                            and self.__hints[new_row][new_col] == 0
+                        ):
                             self.__adj_map[(row, col)].add((new_row, new_col))
 
     def click(self, row: int, col: int) -> bool:
@@ -136,7 +162,7 @@ class Board:
             return False
 
         # Do nothing if there's a repeated click
-        if self.__cells[row][col] != ' ':
+        if self.__cells[row][col] != " ":
             return True
 
         # User selected a mine
@@ -155,7 +181,7 @@ class Board:
                 if node in seen:
                     continue
                 seen.add(node)
-                self.__cells[node[0]][node[1]] = '0'
+                self.__cells[node[0]][node[1]] = "0"
                 for neighbor in self.__adj_map[node]:
                     stack.append(neighbor)
             if self.all_cells_clicked():
@@ -164,7 +190,7 @@ class Board:
             return True
 
         # User selected a cell != 0 and not a mine
-        self.__cells[row][col] = f'{self.__hints[row][col]}'
+        self.__cells[row][col] = f"{self.__hints[row][col]}"
         if self.all_cells_clicked():
             self.__end_game(False)
         return True
@@ -177,7 +203,7 @@ class Board:
         empty_cells = 0
         for x in self.__cells:
             for y in x:
-                if y == ' ':
+                if y == " ":
                     empty_cells += 1
         if empty_cells == self.number_of_mines:
             return True
@@ -192,28 +218,28 @@ class Board:
             self.__has_lost, self.__has_won = False, True
 
     def __reveal_mines(self):
-        for (row, col) in self.mine_positions:
-            self.__cells[row][col] = 'X'
+        for row, col in self.mine_positions:
+            self.__cells[row][col] = "X"
 
     def print_visual_board(self):
         """
         Prints a visual representation of the board.
         """
         for x in self.__cells:
-            print(f'{x}\n')
+            print(f"{x}\n")
 
     def __repr__(self) -> str:
-        printable_board: str = 'Board:\n'
+        printable_board: str = "Board:\n"
 
         for cell in self.__cells:
-            printable_board += f'{cell}\n'
+            printable_board += f"{cell}\n"
 
-        printable_board += '\nHints:\n'
+        printable_board += "\nHints:\n"
 
         for hint in self.__hints:
-            printable_board += f'{hint}\n'
+            printable_board += f"{hint}\n"
 
-        printable_board += '\nMines:\n'
-        printable_board += f'{self.mine_positions}\n'
+        printable_board += "\nMines:\n"
+        printable_board += f"{self.mine_positions}\n"
 
         return printable_board
